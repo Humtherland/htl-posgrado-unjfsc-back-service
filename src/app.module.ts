@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PersonsModule } from './persons/persons.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { PersonsModule } from './persons/persons.module';
       synchronize: Boolean(process.env.DB_SYNC),
     }),
     PersonsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
