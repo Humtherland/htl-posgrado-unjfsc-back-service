@@ -1,5 +1,5 @@
-import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
-import { CreateUserDto } from './dto';
+import { BadRequestException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
+import { CreateUserDto, LoginUserDto } from './dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
@@ -38,16 +38,27 @@ export class AuthService {
 
   }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
+  async login( loginUserDto: LoginUserDto ) {
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
+    const { password, username } = loginUserDto;
 
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+    const user = await this.userRepository.findOne({
+      where: { username },
+      select: { username: true, password: true, id: true } //! OJO!
+    });
+
+    if ( !user ) 
+      throw new UnauthorizedException('Credentials are not valid (email)');
+      
+    if ( !bcrypt.compareSync( password, user.password ) )
+      throw new UnauthorizedException('Credentials are not valid (password)');
+
+      delete user.password;
+
+    return {
+      ...user,
+      // TODO: Return jwt token
+    };
   }
 
   private handleDBErrors( error: any ): never {
