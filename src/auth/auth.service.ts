@@ -3,6 +3,7 @@ import { CreateUserDto } from './dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +21,7 @@ export class AuthService {
       
       const user = this.userRepository.create({
         ...userData,
-        password
+        password: bcrypt.hashSync( password, 10 )
       });
 
       await this.userRepository.save( user )
@@ -28,8 +29,8 @@ export class AuthService {
 
       return {
         ...user,
+        // TODO: Return jwt token
       };
-      // TODO: Retornar el JWT de acceso
 
     } catch (error) {
       this.handleDBErrors(error);
