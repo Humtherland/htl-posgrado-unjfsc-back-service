@@ -4,6 +4,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { JwtPayload } from './interfaces';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
@@ -11,6 +13,7 @@ export class AuthService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    private readonly jwtService: JwtService,
   ) {}
   
   async create( createUserDto: CreateUserDto) {
@@ -29,7 +32,7 @@ export class AuthService {
 
       return {
         ...user,
-        // TODO: Return jwt token
+        token: this.getJwtToken( { id: user.id } )
       };
 
     } catch (error) {
@@ -57,7 +60,7 @@ export class AuthService {
 
     return {
       ...user,
-      // TODO: Return jwt token
+      token: this.getJwtToken( { id: user.id } )
     };
   }
 
@@ -69,6 +72,13 @@ export class AuthService {
     console.log(error)
 
     throw new InternalServerErrorException('Please check server logs');
+
+  }
+
+  private getJwtToken( payload: JwtPayload ) {
+
+    const token = this.jwtService.sign( payload );
+    return token;
 
   }
 }
