@@ -51,7 +51,7 @@ export class AuthService {
     });
 
     if ( !user ) 
-      throw new UnauthorizedException('Credentials are not valid (email)');
+      throw new UnauthorizedException('Credentials are not valid (username)');
       
     if ( !bcrypt.compareSync( password, user.password ) )
       throw new UnauthorizedException('Credentials are not valid (password)');
@@ -80,5 +80,10 @@ export class AuthService {
     const token = this.jwtService.sign( payload );
     return token;
 
+  }
+
+  async existByUsername(username: string): Promise<Boolean> {
+    const o = await this.userRepository.findOneBy({ username });
+    return o !== null;
   }
 }
