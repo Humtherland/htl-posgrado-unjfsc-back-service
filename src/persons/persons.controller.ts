@@ -3,7 +3,7 @@ import { PersonsService } from './persons.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
 import { Auth } from '../auth/decorators';
-import { ValidRoles } from '../auth/interfaces';
+import { ValidScopes } from '../auth/interfaces';
 
 @Controller('persons')
 export class PersonsController {
@@ -15,7 +15,10 @@ export class PersonsController {
   }
 
   @Get()
-  @Auth( ValidRoles.admin )
+  @Auth(
+    ValidScopes.PERSONS_READ, 
+    ValidScopes.PERSONS_SUDO
+    )
   findAll() {
     return this.personsService.findAll();
   }

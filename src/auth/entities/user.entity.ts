@@ -29,7 +29,7 @@ export class User {
         array: true,
         default: ['user']
     })
-    roles: string[];
+    scopes: string[];
 
 
 

@@ -6,7 +6,7 @@ import { Auth, GetUser, RawHeaders, RoleProtected } from './decorators';
 import { CreateUserDto, LoginUserDto } from './dto';
 import { User } from './entities';
 import { UserRoleGuard } from './guards/user-role.guard';
-import { ValidRoles } from './interfaces';
+import { ValidScopes } from './interfaces';
 
 @Controller('auth')
 export class AuthController {
@@ -38,7 +38,10 @@ export class AuthController {
   }
 
   @Get('private2')
-  @RoleProtected( ValidRoles.superUser, ValidRoles.admin )
+  @RoleProtected( 
+    ValidScopes.AUTH_READ,
+    ValidScopes.AUTH_SUDO
+   )
   @UseGuards( AuthGuard(), UserRoleGuard )
   privateRoute2(
     @GetUser() user: User
@@ -51,7 +54,7 @@ export class AuthController {
   }
 
   @Get('private3')
-  @Auth( ValidRoles.admin )
+  @Auth( ValidScopes.AUTH_SUDO )
   privateRoute3(
     @GetUser() user: User
   ) {
