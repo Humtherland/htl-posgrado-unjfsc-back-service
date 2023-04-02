@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { PersonsService } from './persons.service';
 import { PersonsController } from './persons.controller';
 import { Person } from './entities/person.entity';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   controllers: [PersonsController],
@@ -11,6 +12,7 @@ import { Person } from './entities/person.entity';
     TypeOrmModule.forFeature([ 
       Person,
     ]),
+    AuthModule
   ],
   exports: [
     PersonsService,

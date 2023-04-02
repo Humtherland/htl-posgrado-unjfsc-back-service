@@ -2,6 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { PersonsService } from './persons.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
+import { Auth } from '../auth/decorators';
+import { ValidRoles } from '../auth/interfaces';
 
 @Controller('persons')
 export class PersonsController {
@@ -13,6 +15,7 @@ export class PersonsController {
   }
 
   @Get()
+  @Auth( ValidRoles.admin )
   findAll() {
     return this.personsService.findAll();
   }
