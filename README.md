@@ -53,6 +53,8 @@ $ docker run -d -e POSTGRES_PASSWORD=secretpassword -e POSTGRES_DB=TesloDB -e PO
 | ```DB_SYNC``` | A boolean flag indicating whether models should be synchronized with the database. |
 | ```PORT``` | The port the application is running on. |
 | ```HOST_API``` | The base URL for the API. |
+| ```JWT_SECRET``` | Text string used to sign and verify JSON Web tokens (JWT). |
+| ```JWT_DURATION``` | How long the JWT token is valid before it expires. {5m,2h,24h} |
 
 ## Running the app
 
