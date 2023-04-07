@@ -4,8 +4,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { JwtPayload } from './interfaces';
+import { JwtPayload, ValidScopes } from './interfaces';
 import { JwtService } from '@nestjs/jwt';
+import { CreatePostulatorUserDto } from './dto/create-postulator-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -15,6 +16,23 @@ export class AuthService {
     private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
   ) {}
+  
+  async createPostulator( dto: CreatePostulatorUserDto) {
+
+    let userDto = new CreateUserDto();
+
+    userDto.username = dto.username;
+    userDto.password = dto.password;
+    userDto.fullName = dto.fullName;
+    userDto.scopes = [
+      ValidScopes.PERSONS_CREATE,
+      ValidScopes.PERSONS_READ,
+      ValidScopes.PERSONS_UPDATE,
+    ];
+    
+    return await this.create(userDto);
+
+  }
   
   async create( createUserDto: CreateUserDto) {
     

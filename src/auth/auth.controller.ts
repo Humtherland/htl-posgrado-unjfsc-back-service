@@ -4,6 +4,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { Auth, GetUser, RawHeaders, RoleProtected } from './decorators';
 import { CreateUserDto, LoginUserDto } from './dto';
+import { CreatePostulatorUserDto } from './dto/create-postulator-user.dto';
 import { User } from './entities';
 import { UserRoleGuard } from './guards/user-role.guard';
 import { ValidScopes } from './interfaces';
@@ -12,7 +13,13 @@ import { ValidScopes } from './interfaces';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Post('postulation-register')
+  createPostulatorUser(@Body() createPostulatorUserDto: CreatePostulatorUserDto ) {
+    return this.authService.createPostulator( createPostulatorUserDto );
+  }
+
   @Post('register')
+  @Auth( ValidScopes.AUTH_SUDO )
   createUser(@Body() createUserDto: CreateUserDto ) {
     return this.authService.create( createUserDto );
   }
