@@ -17,7 +17,11 @@ export class AuthBootstrap {
         this.logger = new Logger(AuthBootstrap.name)
     }
 
-    async loadData(): Promise<void> {
+    async loadData(): Promise<void> { }
+
+    async loadAdminData(personId: string): Promise<void> {
+
+        console.log("ON ADMIN CREATION - " + personId);
 
         const username = "admin";
         const exist: Boolean = await this.service.existByUsername(username);

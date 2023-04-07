@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { BootstrapService } from './bootstrap.service';
 import { AuthModule } from '../auth/auth.module';
+import { PersonsModule } from '../persons/persons.module';
 
 @Module({
-  imports: [AuthModule],
+  imports: [AuthModule, PersonsModule],
   controllers: [],
   providers: [BootstrapService],
   exports: [BootstrapService]

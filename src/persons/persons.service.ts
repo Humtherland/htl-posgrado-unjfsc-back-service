@@ -86,6 +86,11 @@ export class PersonsService {
     }
   }
 
+  async existByDni(dni: string): Promise<Boolean> {
+    const o = await this.personRepository.findOneBy({ dni });
+    return o !== null;
+  }
+
   private handleDBErrors( error: any ): never {
 
     if ( error.code === '23505' ) 
