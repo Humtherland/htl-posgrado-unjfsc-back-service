@@ -1,4 +1,4 @@
-import { IsIn, IsString, MaxLength, MinLength 
+import { IsDateString, IsEmail, IsIn, IsString, MaxLength, MinLength 
 } from 'class-validator';
 
 export class CreatePersonDto {
@@ -14,7 +14,8 @@ export class CreatePersonDto {
     @IsString()
     lastName: string;
 
-    birthday: string;
+    @IsDateString()
+    birthday: Date;
 
     @IsIn(['masculino','femenino','nobinario'])
     gender: string;
@@ -29,6 +30,7 @@ export class CreatePersonDto {
     address: string;
 
     @IsString()
+    @IsEmail()
     email: string;
 
 }

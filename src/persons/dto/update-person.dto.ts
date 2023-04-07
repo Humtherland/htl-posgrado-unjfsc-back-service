@@ -1,4 +1,5 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { OmitType } from '@nestjs/mapped-types';
 import { CreatePersonDto } from './create-person.dto';
+const { omit } = require('lodash');
 
-export class UpdatePersonDto extends PartialType(CreatePersonDto) {}
+export class UpdatePersonDto extends OmitType(CreatePersonDto, ['dni',] as const) {}

@@ -22,9 +22,9 @@ export class Person {
     lastName: string;
 
     @Column({
-        type: 'text',
+        type: 'timestamptz',
     })
-    birthday: string;
+    birthday: Date;
 
     @Column('text')
     gender: string;
