@@ -1,4 +1,4 @@
-import { IsArray, IsString, Matches, MaxLength, MinLength } from 'class-validator';
+import { IsArray, IsString, IsUUID, Matches, MaxLength, MinLength } from 'class-validator';
 
 
 export class CreateUserDto {
@@ -15,9 +15,8 @@ export class CreateUserDto {
     })
     password: string;
 
-    @IsString()
-    @MinLength(1)
-    fullName: string;
+    @IsUUID()
+    personId: string;
 
     @IsArray()
     scopes: string[];

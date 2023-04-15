@@ -21,8 +21,6 @@ export class AuthBootstrap {
 
     async loadAdminData(personId: string): Promise<void> {
 
-        console.log("ON ADMIN CREATION - " + personId);
-
         const username = "admin";
         const exist: Boolean = await this.service.existByUsername(username);
 
@@ -33,7 +31,7 @@ export class AuthBootstrap {
 
             const dto: CreateUserDto = new CreateUserDto();
 
-            dto.fullName = "Admin";
+            dto.personId = personId;
             dto.username = username;
             dto.password = "Adm1n3105";
             dto.scopes = [

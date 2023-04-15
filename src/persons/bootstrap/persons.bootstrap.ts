@@ -19,7 +19,7 @@ export class PersonBootstrap {
 
     async loadAdminData(): Promise<string> {
 
-        const dni = "10000002";
+        const dni = "10000001";
         const exist: Boolean = await this.service.existByDni(dni);
 
         if (exist) {

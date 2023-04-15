@@ -7,6 +7,7 @@ import * as bcrypt from 'bcrypt';
 import { JwtPayload, ValidScopes } from './interfaces';
 import { JwtService } from '@nestjs/jwt';
 import { CreatePostulatorUserDto } from './dto/create-postulator-user.dto';
+import { Person } from '../persons/entities';
 
 @Injectable()
 export class AuthService {
@@ -14,6 +15,8 @@ export class AuthService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    @InjectRepository(Person)
+    private readonly personRepository: Repository<Person>,
     private readonly jwtService: JwtService,
   ) {}
   
@@ -23,7 +26,7 @@ export class AuthService {
 
     userDto.username = dto.username;
     userDto.password = dto.password;
-    userDto.fullName = dto.fullName;
+    userDto.personId = dto.personId;
     userDto.scopes = [
       ValidScopes.PERSONS_CREATE,
       ValidScopes.PERSONS_READ,
@@ -42,6 +45,7 @@ export class AuthService {
       
       const user = this.userRepository.create({
         ...userData,
+        person: await this.personRepository.findOneBy({ id: createUserDto.personId }),
         password: bcrypt.hashSync( password, 10 )
       });
 
@@ -63,9 +67,11 @@ export class AuthService {
 
     const { password, username } = loginUserDto;
 
+    const users = await this.userRepository.find({});
+
     const user = await this.userRepository.findOne({
       where: { username },
-      select: { username: true, password: true, id: true } //! OJO!
+      select: { username: true, password: true, id: true, } //! OJO!
     });
 
     if ( !user ) 
@@ -74,7 +80,7 @@ export class AuthService {
     if ( !bcrypt.compareSync( password, user.password ) )
       throw new UnauthorizedException('Credentials are not valid (password)');
 
-      delete user.password;
+    delete user.password;
 
     return {
       ...user,
@@ -86,8 +92,6 @@ export class AuthService {
 
     if ( error.code === '23505' ) 
       throw new BadRequestException( error.detail );
-
-    console.log(error)
 
     throw new InternalServerErrorException('Please check server logs');
 

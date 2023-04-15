@@ -1,4 +1,4 @@
-import { IsArray, IsString, Matches, MaxLength, MinLength } from 'class-validator';
+import { IsString, IsUUID, Matches, MaxLength, MinLength } from 'class-validator';
 
 
 export class CreatePostulatorUserDto {
@@ -15,8 +15,7 @@ export class CreatePostulatorUserDto {
     })
     password: string;
 
-    @IsString()
-    @MinLength(1)
-    fullName: string;
+    @IsUUID()
+    personId: string;
 
 }

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from '../../auth/entities';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity({ name: 'persons' })
 export class Person {
@@ -48,5 +49,9 @@ export class Person {
         type: 'text',
     })
     email: string;
+
+    @OneToMany(type => User, user => user.person,
+        { cascade: true })
+    users: User[];
 
 }
