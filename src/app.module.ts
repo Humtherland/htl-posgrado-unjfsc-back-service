@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { PersonsModule } from './persons/persons.module';
 import { AuthModule } from './auth/auth.module';
 import { BootstrapModule } from './bootstrap/bootstrap.module';
+import { RoleModule } from './role/role.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { BootstrapModule } from './bootstrap/bootstrap.module';
       autoLoadEntities: Boolean(process.env.DB_LOAD),
       synchronize: Boolean(process.env.DB_SYNC),
     }),
+    RoleModule,
   ],
   controllers: [AppController],
   providers: [AppService],

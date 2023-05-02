@@ -62,11 +62,31 @@ $ docker run -d -e POSTGRES_PASSWORD=secretpassword -e POSTGRES_DB=TesloDB -e PO
 # development
 $ yarn run start
 
+# development debug
+$ yarn run start:debug
+
 # watch mode
 $ yarn run start:dev
 
 # production mode
 $ yarn run start:prod
+```
+
+## Generar un modulo
+
+```bash
+# We enter the src directory of the project
+$ cd src
+
+# We open a terminal and write the following command
+$ nest g res [nombre del modulo]
+
+# select you option
+$ REST API (Enter)
+
+# select you option
+$ Y (enter)
+
 ```
 
 ## Test

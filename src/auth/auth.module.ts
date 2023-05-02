@@ -27,7 +27,7 @@ import { AuthBootstrap } from './bootstrap/auth.bootstrap';
         return {
           secret: configService.get('JWT_SECRET'),
           signOptions: {
-            expiresIn: configService.get('JWT_DURATION')
+            // expiresIn: configService.get('JWT_DURATION')
           }
         }
       }
