@@ -4,13 +4,15 @@ import { AuthModule } from '../auth/auth.module';
 import { CivilStateModule } from 'src/civil-state/civil-state.module';
 import { DegreeModule } from 'src/degree/degree.module';
 import { SchoolModule } from 'src/school/school.module';
+import { SpecialtyModule } from 'src/specialty/specialty.module';
 
 @Module({
   imports: [
     AuthModule,
     CivilStateModule,
     DegreeModule,
-    SchoolModule
+    SchoolModule,
+    SpecialtyModule
   ],
   providers: [BootstrapService],
   exports: [BootstrapService]

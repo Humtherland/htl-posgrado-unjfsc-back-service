@@ -1,5 +1,6 @@
 import { Degree } from "src/degree/entities/degree.entity";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Specialty } from "src/specialty/entities/specialty.entity";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'school' })
 export class School {
@@ -14,6 +15,9 @@ export class School {
 	@ManyToOne((type:any) => Degree, (degree) => degree.id, {cascade:true, nullable: false} )
 	@JoinColumn({ name: 'id_degree' })
   id_degree: number;
+
+	@OneToMany((type) => Specialty, (specialty) => specialty.id_school )
+	school: Specialty;
 
 	@CreateDateColumn()
 	at_create: Date;

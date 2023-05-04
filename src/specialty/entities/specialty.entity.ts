@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { School } from "src/school/entities/school.entity";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'specialty' })
 export class Specialty {
@@ -10,10 +11,9 @@ export class Specialty {
 	})
 	name: string;
 
-	@Column({
-			type: 'integer',
-		})
-	quota: number;
+	@ManyToOne((type:any) => School, (school) => school.id, {cascade:true, nullable: false} )
+	@JoinColumn({ name: 'id_school' })
+  id_school: number;
 
 	@CreateDateColumn()
 	at_create: Date;
