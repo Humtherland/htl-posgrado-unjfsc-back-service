@@ -11,7 +11,7 @@ export class CivilState {
 	})
 	name: string;
 
-	@OneToOne((type) => Person, (person) => person.address )
+	@OneToOne((type) => Person, (person) => person.id_civil_status )
 	person: Person;
 
 	@CreateDateColumn()

@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { School } from "src/school/entities/school.entity";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'degree' })
 export class Degree {
@@ -9,6 +10,9 @@ export class Degree {
 		type: 'text',
 	})
 	name: string;
+
+	@OneToMany((type) => School, (school) => school.id_degree )
+	school: School;
 
 	@CreateDateColumn()
 	at_create: Date;

@@ -39,4 +39,8 @@ export class DegreeService {
     const o = await this.repository.findOneBy({ name });
     return o !== null;
   }
+
+  async findOneByName(name: string) {
+    return await this.repository.findOneBy({name});
+  }
 }

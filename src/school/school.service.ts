@@ -1,26 +1,42 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateSchoolDto } from './dto/create-school.dto';
 import { UpdateSchoolDto } from './dto/update-school.dto';
+import { School } from './entities/school.entity';
 
 @Injectable()
 export class SchoolService {
+
+  constructor(@InjectRepository(School)  private readonly repository: Repository<School>){}
+
   create(createSchoolDto: CreateSchoolDto) {
-    return 'This action adds a new school';
+    const create = this.repository.create(createSchoolDto);
+    return this.repository.save(create);
   }
 
-  findAll() {
-    return `This action returns all school`;
+  async findAll() {
+    return await this.repository.find({select:['id','name']});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} school`;
+  async findOne(id: number) {
+    return await this.repository.findOneBy({id});
   }
 
-  update(id: number, updateSchoolDto: UpdateSchoolDto) {
-    return `This action updates a #${id} school`;
+  async update(id: number, updateSchoolDto: UpdateSchoolDto) {
+    const update = await this.repository.preload({id, ...updateSchoolDto});
+    if (!update)throw new NotFoundException('Resource not found')
+    return this.repository.save(update);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} school`;
+  async remove(id: number) {
+    const remove = await this.repository.findOneBy({id});
+    if (!remove)throw new NotFoundException('Resource not found')
+    return this.repository.remove(remove)
+  }
+
+  async exist(name: string): Promise<Boolean> {
+    const o = await this.repository.findOneBy({ name });
+    return o !== null;
   }
 }
