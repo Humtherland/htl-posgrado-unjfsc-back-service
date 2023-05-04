@@ -7,6 +7,23 @@ import { PersonsModule } from './persons/persons.module';
 import { AuthModule } from './auth/auth.module';
 import { BootstrapModule } from './bootstrap/bootstrap.module';
 import { RoleModule } from './role/role.module';
+import { DepartmentModule } from './department/department.module';
+import { ProvinceModule } from './province/province.module';
+import { DistrictModule } from './district/district.module';
+import { LocationModule } from './location/location.module';
+import { CivilStateModule } from './civil-state/civil-state.module';
+import { PersonSpecialityModule } from './person_speciality/person_speciality.module';
+import { PublicationsModule } from './publications/publications.module';
+import { TrainingModule } from './training/training.module';
+import { WorkExperienceModule } from './work_experience/work_experience.module';
+import { AcademicInformationModule } from './academic_information/academic_information.module';
+import { StudyModalityModule } from './study_modality/study_modality.module';
+import { SpecialtyModule } from './specialty/specialty.module';
+import { SchoolModule } from './school/school.module';
+import { DegreeModule } from './degree/degree.module';
+import { RequestApplyModule } from './request_apply/request_apply.module';
+import { RequiredFilesModule } from './required_files/required_files.module';
+import { PayModule } from './pay/pay.module';
 
 @Module({
   imports: [
@@ -25,6 +42,23 @@ import { RoleModule } from './role/role.module';
       synchronize: Boolean(process.env.DB_SYNC),
     }),
     RoleModule,
+    DepartmentModule,
+    ProvinceModule,
+    DistrictModule,
+    LocationModule,
+    CivilStateModule,
+    PersonSpecialityModule,
+    PublicationsModule,
+    TrainingModule,
+    WorkExperienceModule,
+    AcademicInformationModule,
+    StudyModalityModule,
+    SpecialtyModule,
+    SchoolModule,
+    DegreeModule,
+    RequestApplyModule,
+    RequiredFilesModule,
+    PayModule,
   ],
   controllers: [AppController],
   providers: [AppService],

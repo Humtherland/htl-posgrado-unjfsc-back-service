@@ -5,7 +5,6 @@ export class CreateUserDto {
 
     @IsString()
     username: string;
-
     @IsString()
     @MinLength(6)
     @MaxLength(50)

@@ -3,7 +3,6 @@ import { Person } from '../../persons/entities/person.entity';
 
 @Entity('users')
 export class User {
-    
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
