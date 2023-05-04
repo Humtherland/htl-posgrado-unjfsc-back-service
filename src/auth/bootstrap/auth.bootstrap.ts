@@ -10,7 +10,7 @@ export class AuthBootstrap {
 
     private readonly logger: Logger;
 
-    constructor( 
+    constructor(
         private readonly service: AuthService,
         private readonly config: ConfigService
         ) {

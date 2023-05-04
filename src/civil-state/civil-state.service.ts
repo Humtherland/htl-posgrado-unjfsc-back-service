@@ -1,26 +1,44 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateCivilStateDto } from './dto/create-civil-state.dto';
 import { UpdateCivilStateDto } from './dto/update-civil-state.dto';
+import { CivilState } from './entities/civil-state.entity';
 
 @Injectable()
 export class CivilStateService {
+
+  constructor(@InjectRepository(CivilState)  private readonly repository: Repository<CivilState>){}
+
   create(createCivilStateDto: CreateCivilStateDto) {
-    return 'This action adds a new civilState';
+    const create = this.repository.create(createCivilStateDto);
+    return this.repository.save(create);
+
   }
 
-  findAll() {
-    return `This action returns all civilState`;
+  async findAll() {
+    return await this.repository.find({select:['id','name']});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} civilState`;
+  async findOne(id: number) {
+    return await this.repository.findOneBy({id});
   }
 
-  update(id: number, updateCivilStateDto: UpdateCivilStateDto) {
-    return `This action updates a #${id} civilState`;
+  async update(id: number, updateCivilStateDto: UpdateCivilStateDto) {
+    const update = await this.repository.preload({id, ...updateCivilStateDto});
+    if (!update)throw new NotFoundException('Resource not found')
+    return this.repository.save(update);
+
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} civilState`;
+  async remove(id: number) {
+    const remove = await this.repository.findOneBy({id});
+    if (!remove)throw new NotFoundException('Resource not found')
+    return this.repository.remove(remove)
+  }
+
+  async exist(name: string): Promise<Boolean> {
+    const o = await this.repository.findOneBy({ name });
+    return o !== null;
   }
 }

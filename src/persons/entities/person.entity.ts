@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { CivilState } from 'src/civil-state/entities/civil-state.entity';
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity({ name: 'persons' })
 export class Person {
@@ -13,39 +14,56 @@ export class Person {
     @Column({
         type: 'text',
     })
-    firstName: string;
+    name: string;
 
     @Column({
         type: 'text',
     })
-    lastName: string;
+    first_name: string;
 
     @Column({
         type: 'text',
     })
-    birthday: string;
+    last_name: string;
+
+    @Column({
+        type: 'date',
+    })
+    birthday: Date;
 
     @Column('text')
     gender: string;
 
-    @Column({
-        type: 'text',
-    })
-    civilState: string;
+    @Column('text')
+    cell_phone_number: string;
 
-    @Column({
-        type: 'text',
-    })
-    zipCode: string;
+    @Column('text')
+    email: string;
+
+    @Column('text')
+    department: string;
+
+    @Column('text')
+    province: string;
+
+    @Column('text')
+    district: string;
 
     @Column({
         type: 'text',
     })
     address: string;
 
-    @Column({
-        type: 'text',
-    })
-    email: string;
+    @OneToOne((type:any) => CivilState, (civilState) => civilState.id, {cascade:true, nullable: false} )
+	@JoinColumn({ name: 'id_civil_status' })
+    id_civil_status: CivilState;
+    
+    @CreateDateColumn()
+	at_create: Date;
 
+	@UpdateDateColumn()
+	at_update: Date;
+
+	@DeleteDateColumn()
+	at_delete: Date;
 }

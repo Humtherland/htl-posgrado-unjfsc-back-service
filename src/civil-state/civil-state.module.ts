@@ -4,10 +4,14 @@ import { CivilStateController } from './civil-state.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CivilState } from './entities/civil-state.entity';
 import { AuthModule } from 'src/auth/auth.module';
+import { CivilStateBootstrap } from './bootstrap/civil-state.bootstrap';
 
 @Module({
   controllers: [CivilStateController],
-  providers: [CivilStateService],
+  providers: [
+    CivilStateService,
+    CivilStateBootstrap
+  ],
   imports: [
     TypeOrmModule.forFeature([
       CivilState,
@@ -15,6 +19,7 @@ import { AuthModule } from 'src/auth/auth.module';
     AuthModule
   ],
   exports: [
+    CivilStateBootstrap,
     CivilStateService,
     TypeOrmModule,
   ]

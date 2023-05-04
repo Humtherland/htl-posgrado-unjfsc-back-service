@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common';
 import { BootstrapService } from './bootstrap.service';
 import { AuthModule } from '../auth/auth.module';
+import { CivilStateModule } from 'src/civil-state/civil-state.module';
 
 @Module({
-  imports: [AuthModule],
+  imports: [
+    AuthModule,
+    CivilStateModule
+  ],
   controllers: [],
   providers: [BootstrapService],
   exports: [BootstrapService]
