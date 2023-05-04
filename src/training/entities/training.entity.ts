@@ -3,7 +3,7 @@ import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedCol
 @Entity({ name: 'training' })
 export class Training {
 	@PrimaryGeneratedColumn('increment')
-  id: string;
+  id: number;
 
 	@Column({
 		type: 'text',

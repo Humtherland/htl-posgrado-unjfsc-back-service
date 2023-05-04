@@ -1,9 +1,10 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-@Entity({ name: 'publication' })
+@Entity({ name: 'work_Experience' })
 
 export class WorkExperience {
 	@PrimaryGeneratedColumn('increment')
-  id: string;
+  id: number;
+
 	@Column({
 		type: 'text',
 	})

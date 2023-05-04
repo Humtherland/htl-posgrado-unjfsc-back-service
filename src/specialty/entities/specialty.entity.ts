@@ -10,6 +10,11 @@ export class Specialty {
 	})
 	name: string;
 
+	@Column({
+			type: 'integer',
+		})
+	quota: number;
+
 	@CreateDateColumn()
 	at_create: Date;
 

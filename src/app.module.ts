@@ -7,10 +7,6 @@ import { PersonsModule } from './persons/persons.module';
 import { AuthModule } from './auth/auth.module';
 import { BootstrapModule } from './bootstrap/bootstrap.module';
 import { RoleModule } from './role/role.module';
-import { DepartmentModule } from './department/department.module';
-import { ProvinceModule } from './province/province.module';
-import { DistrictModule } from './district/district.module';
-import { LocationModule } from './location/location.module';
 import { CivilStateModule } from './civil-state/civil-state.module';
 import { PersonSpecialityModule } from './person_speciality/person_speciality.module';
 import { PublicationsModule } from './publications/publications.module';
@@ -42,10 +38,6 @@ import { PayModule } from './pay/pay.module';
       synchronize: Boolean(process.env.DB_SYNC),
     }),
     RoleModule,
-    DepartmentModule,
-    ProvinceModule,
-    DistrictModule,
-    LocationModule,
     CivilStateModule,
     PersonSpecialityModule,
     PublicationsModule,

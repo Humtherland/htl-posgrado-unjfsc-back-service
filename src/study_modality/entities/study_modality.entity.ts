@@ -3,7 +3,7 @@ import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedCol
 @Entity({ name: 'study-modality' })
 export class StudyModality {
 	@PrimaryGeneratedColumn('increment')
-  id: string;
+  id: number;
 
 	@Column({
 		type: 'text',
