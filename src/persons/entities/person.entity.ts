@@ -56,8 +56,8 @@ export class Person {
 
     @OneToOne((type:any) => CivilState, (civilState) => civilState.id, {cascade:true, nullable: false} )
 	@JoinColumn({ name: 'id_civil_status' })
-    id_civil_status: CivilState;
-    
+    id_civil_status: number;
+
     @CreateDateColumn()
 	at_create: Date;
 

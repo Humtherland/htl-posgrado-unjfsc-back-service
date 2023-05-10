@@ -1,5 +1,4 @@
 import { IsNotEmpty } from "class-validator";
-import { Degree } from "src/degree/entities/degree.entity";
 
 export class CreateSchoolDto {
 	@IsNotEmpty()

@@ -1,26 +1,37 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
+import { Person } from './entities/person.entity';
 
 @Injectable()
 export class PersonsService {
+
+  constructor(@InjectRepository(Person)  private readonly repository: Repository<Person>){}
+
   create(createPersonDto: CreatePersonDto) {
-    return 'This action adds a new person';
+    const create = this.repository.create(createPersonDto);
+    return this.repository.save(create);
   }
 
-  findAll() {
-    return `This action returns all persons`;
+  async findAll() {
+    return await this.repository.find({select:['id','name']});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} person`;
+  async findOne(id: string) {
+    return await this.repository.findOneBy({id});
   }
 
-  update(id: number, updatePersonDto: UpdatePersonDto) {
-    return `This action updates a #${id} person`;
+  async update(id: string, updatePersonDto: UpdatePersonDto) {
+    const update = await this.repository.preload({id, ...updatePersonDto});
+    if (!update)throw new NotFoundException('Resource not found')
+    return this.repository.save(update);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} person`;
+  async remove(id: string) {
+    const remove = await this.repository.findOneBy({id});
+    if (!remove)throw new NotFoundException('Resource not found')
+    return this.repository.remove(remove)
   }
 }

@@ -16,11 +16,10 @@ export class AuthService {
     private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
   ) {}
-  
+
   async createPostulator( dto: CreatePostulatorUserDto) {
 
     let userDto = new CreateUserDto();
-
     userDto.username = dto.username;
     userDto.password = dto.password;
     userDto.fullName = dto.fullName;
@@ -29,16 +28,13 @@ export class AuthService {
       ValidScopes.PERSONS_READ,
       ValidScopes.PERSONS_UPDATE,
     ];
-    
     return await this.create(userDto);
 
   }
-  
   async create( createUserDto: CreateUserDto) {
-    
+
     try {
       const { password, ...userData } = createUserDto;
-      
       const user = this.userRepository.create({
         ...userData,
         password: bcrypt.hashSync( password, 10 )

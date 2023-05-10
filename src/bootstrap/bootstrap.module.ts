@@ -5,6 +5,7 @@ import { CivilStateModule } from 'src/civil-state/civil-state.module';
 import { DegreeModule } from 'src/degree/degree.module';
 import { SchoolModule } from 'src/school/school.module';
 import { SpecialtyModule } from 'src/specialty/specialty.module';
+import { RoleModule } from 'src/role/role.module';
 
 @Module({
   imports: [
@@ -12,7 +13,8 @@ import { SpecialtyModule } from 'src/specialty/specialty.module';
     CivilStateModule,
     DegreeModule,
     SchoolModule,
-    SpecialtyModule
+    SpecialtyModule,
+    RoleModule
   ],
   providers: [BootstrapService],
   exports: [BootstrapService]
