@@ -21,7 +21,7 @@ export class AuthBootstrap {
 
     async loadData(): Promise<void> {
 
-        const username = "admin";
+        const username = "root";
         const exist: Boolean = await this.service.existByUsername(username);
 
         if (exist) {
@@ -31,7 +31,7 @@ export class AuthBootstrap {
 
             let dto: CreateUserDto = {
                 username: username,
-                password: "Adm1n3105",
+                password: "123456",
                 id_person: {
                     dni: "76934958",
                     name: "julio",
@@ -53,12 +53,6 @@ export class AuthBootstrap {
                     ValidScopes.AUTH_SUDO,
                 ]
             }
-            dto.username = username;
-            dto.password = "Adm1n3105";
-            dto.scopes = [
-                ValidScopes.PERSONS_SUDO,
-                ValidScopes.AUTH_SUDO,
-            ];
             await this.service.create(dto);
             this.logger.log('[Admin Account] The admin was created succesfully.');
         }
