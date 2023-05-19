@@ -19,7 +19,7 @@ export class AuthController {
   }
 
   @Post('register')
-  @Auth( ValidScopes.AUTH_SUDO )
+  // @Auth( ValidScopes.AUTH_SUDO )
   createUser(@Body() createUserDto: CreateUserDto ) {
     return this.authService.create( createUserDto );
   }
@@ -65,11 +65,9 @@ export class AuthController {
   privateRoute3(
     @GetUser() user: User
   ) {
-
     return {
       ok: true,
       user
     }
   }
-  
 }

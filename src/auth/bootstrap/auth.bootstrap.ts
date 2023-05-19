@@ -4,6 +4,7 @@ import { User } from '../entities/user.entity';
 import { AuthService } from '../auth.service';
 import { ConfigService } from '@nestjs/config';
 import { ValidScopes } from '../interfaces';
+import { RoleService } from 'src/role/role.service';
 
 @Injectable()
 export class AuthBootstrap {
@@ -12,6 +13,7 @@ export class AuthBootstrap {
 
     constructor(
         private readonly service: AuthService,
+        // private readonly roleservice: RoleService,
         private readonly config: ConfigService
         ) {
         this.logger = new Logger(AuthBootstrap.name)
@@ -27,18 +29,37 @@ export class AuthBootstrap {
         } else {
             this.logger.log('[Admin Account] The admin does not exist. Creating...');
 
-            const dto: CreateUserDto = new CreateUserDto();
-
-            dto.fullName = "Admin";
+            let dto: CreateUserDto = {
+                username: username,
+                password: "Adm1n3105",
+                id_person: {
+                    dni: "76934958",
+                    name: "julio",
+                    first_name: "porlles",
+                    last_name: "pardo",
+                    birthday: new Date(),
+                    gender: "masculino",
+                    cell_phone_number: "970578887",
+                    email: "juilo.porlles.pardo@gmail.com",
+                    department: "Lima",
+                    province: "Lima",
+                    district: "Huacho",
+                    address: "Av San Martin",
+                    id_civil_status: 1,
+                    id_role: 3,
+                },
+                scopes:[
+                    ValidScopes.PERSONS_SUDO,
+                    ValidScopes.AUTH_SUDO,
+                ]
+            }
             dto.username = username;
             dto.password = "Adm1n3105";
             dto.scopes = [
                 ValidScopes.PERSONS_SUDO,
                 ValidScopes.AUTH_SUDO,
             ];
-            
             await this.service.create(dto);
-
             this.logger.log('[Admin Account] The admin was created succesfully.');
         }
     }

@@ -19,11 +19,11 @@ export class BootstrapService {
     ) {}
 
   async loadData() {
-    await this.authBootstrap.loadData();
     await this.civilStateBootstrap.loadData();
     await this.degreeBootstrap.loadData();
     await this.schoolBootstrap.loadData();
     await this.specialtyBootstrap.loadData();
     await this.roleBootstrap.loadData();
+    await this.authBootstrap.loadData();
   }
 }

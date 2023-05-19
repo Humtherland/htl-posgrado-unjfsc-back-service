@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Person } from "src/persons/entities/person.entity";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'role' })
 export class Role {
@@ -9,6 +10,9 @@ export class Role {
 		type: 'text',
 	})
 	name: string;
+
+	@OneToOne((type) => Person, (person) => person.id_role )
+	person: Person;
 
 	@Column('text', {
 		array: true,

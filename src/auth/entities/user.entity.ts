@@ -1,6 +1,7 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Person } from 'src/persons/entities/person.entity';
+import { BeforeInsert, BeforeUpdate, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('users')
+@Entity('auth')
 export class User {
     @PrimaryGeneratedColumn('uuid')
     id: string;
@@ -15,8 +16,12 @@ export class User {
     })
     password: string;
 
-    @Column('text')
-    fullName: string;
+    @OneToOne((type:any) => Person, (person) => person.id, {cascade:true, nullable: false} )
+	@JoinColumn({ name: 'id_person' })
+    id_person: Person;
+
+    // @Column('text')
+    // fullName: string;
 
     @Column('bool', {
         default: true

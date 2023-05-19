@@ -32,8 +32,8 @@ export class UserRoleGuard implements CanActivate {
       }
     }
     
-    throw new ForbiddenException(
-      `User ${ user.fullName } need a valid scope: [${ validScopes }]`
-    );
+    // throw new ForbiddenException(
+    //   `User ${ user.fullName } need a valid scope: [${ validScopes }]`
+    // );
   }
 }

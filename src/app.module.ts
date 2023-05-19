@@ -20,6 +20,7 @@ import { DegreeModule } from './degree/degree.module';
 import { RequestApplyModule } from './request_apply/request_apply.module';
 import { RequiredFilesModule } from './required_files/required_files.module';
 import { PayModule } from './pay/pay.module';
+import { ApplicantModule } from './applicant/applicant.module';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { PayModule } from './pay/pay.module';
     RequestApplyModule,
     RequiredFilesModule,
     PayModule,
+    ApplicantModule,
   ],
   controllers: [AppController],
   providers: [AppService],

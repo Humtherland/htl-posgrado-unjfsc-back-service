@@ -22,7 +22,6 @@ export class AuthService {
     let userDto = new CreateUserDto();
     userDto.username = dto.username;
     userDto.password = dto.password;
-    userDto.fullName = dto.fullName;
     userDto.scopes = [
       ValidScopes.PERSONS_CREATE,
       ValidScopes.PERSONS_READ,
