@@ -69,6 +69,16 @@ export class AuthService {
     };
   }
 
+  async infoUser(userId: string) {
+    const user = await this.userRepository
+    .createQueryBuilder('auth')
+    .leftJoinAndSelect('auth.id_person', 'id_person')
+    .where('auth.id = :userId', {userId})
+    .getOne();
+    return user
+    ;
+  }
+
   private handleDBErrors( error: any ): never {
 
     if ( error.code === '23505' )

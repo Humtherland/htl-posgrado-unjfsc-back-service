@@ -8,6 +8,7 @@ import { CreatePostulatorUserDto } from './dto/create-postulator-user.dto';
 import { User } from './entities';
 import { UserRoleGuard } from './guards/user-role.guard';
 import { ValidScopes } from './interfaces';
+import * as jwt from 'jsonwebtoken';
 
 @Controller('auth')
 export class AuthController {
@@ -27,6 +28,16 @@ export class AuthController {
   @Post('login')
   loginUser(@Body() loginUserDto: LoginUserDto ) {
     return this.authService.login( loginUserDto );
+  }
+
+  @Get('info-user')
+  @UseGuards(AuthGuard())
+  infoUser(@Req() request: Request) {
+    const authorizationHeader = request.headers['authorization'];
+    const token = authorizationHeader.split(' ')[1];
+    const decodedToken = jwt.verify( token, process.env.JWT_SECRET);
+    let id_user = decodedToken['id']
+    return this.authService.infoUser(id_user);
   }
 
   @Get('private')
