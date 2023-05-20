@@ -69,6 +69,10 @@ export class AuthService {
     };
   }
 
+  async findAll() {
+    return await this.userRepository.find({relations: ['id_person']});
+  }
+
   async infoUser(userId: string) {
     const user = await this.userRepository
     .createQueryBuilder('auth')

@@ -40,45 +40,51 @@ export class AuthController {
     return this.authService.infoUser(id_user);
   }
 
-  @Get('private')
+  @Get()
   @UseGuards(AuthGuard())
-  testingPrivateRoute(
-    @Req() request: Express.Request,
-    @GetUser() user: User,
-    @GetUser('email') userEmail: string,
-    @RawHeaders() rawHeaders: string[],
-    ) {
-      console.log(user)
-    return {
-      ok: true,
-      message: 'Hola Mundo Private',
-    }
+  findAll() {
+    return this.authService.findAll();
   }
 
-  @Get('private2')
-  @RoleProtected( 
-    ValidScopes.AUTH_READ,
-    ValidScopes.AUTH_SUDO
-   )
-  @UseGuards( AuthGuard(), UserRoleGuard )
-  privateRoute2(
-    @GetUser() user: User
-  ) {
+  // @Get('private')
+  // @UseGuards(AuthGuard())
+  // testingPrivateRoute(
+  //   @Req() request: Express.Request,
+  //   @GetUser() user: User,
+  //   @GetUser('email') userEmail: string,
+  //   @RawHeaders() rawHeaders: string[],
+  //   ) {
+  //     console.log(user)
+  //   return {
+  //     ok: true,
+  //     message: 'Hola Mundo Private',
+  //   }
+  // }
 
-    return {
-      ok: true,
-      user
-    }
-  }
+  // @Get('private2')
+  // @RoleProtected( 
+  //   ValidScopes.AUTH_READ,
+  //   ValidScopes.AUTH_SUDO
+  //  )
+  // @UseGuards( AuthGuard(), UserRoleGuard )
+  // privateRoute2(
+  //   @GetUser() user: User
+  // ) {
 
-  @Get('private3')
-  @Auth( ValidScopes.AUTH_SUDO )
-  privateRoute3(
-    @GetUser() user: User
-  ) {
-    return {
-      ok: true,
-      user
-    }
-  }
+  //   return {
+  //     ok: true,
+  //     user
+  //   }
+  // }
+
+  // @Get('private3')
+  // @Auth( ValidScopes.AUTH_SUDO )
+  // privateRoute3(
+  //   @GetUser() user: User
+  // ) {
+  //   return {
+  //     ok: true,
+  //     user
+  //   }
+  // }
 }
