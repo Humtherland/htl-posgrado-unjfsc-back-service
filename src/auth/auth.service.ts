@@ -7,6 +7,7 @@ import * as bcrypt from 'bcrypt';
 import { JwtPayload, ValidScopes } from './interfaces';
 import { JwtService } from '@nestjs/jwt';
 import { CreatePostulatorUserDto } from './dto/create-postulator-user.dto';
+import { IPaginationOptions, paginate, Pagination } from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class AuthService {
@@ -17,19 +18,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async createPostulator( dto: CreatePostulatorUserDto) {
 
-    let userDto = new CreateUserDto();
-    userDto.username = dto.username;
-    userDto.password = dto.password;
-    userDto.scopes = [
-      ValidScopes.PERSONS_CREATE,
-      ValidScopes.PERSONS_READ,
-      ValidScopes.PERSONS_UPDATE,
-    ];
-    return await this.create(userDto);
-
-  }
   async create( createUserDto: CreateUserDto) {
 
     try {
@@ -71,6 +60,14 @@ export class AuthService {
 
   async findAll() {
     return await this.userRepository.find({relations: ['id_person']});
+  }
+
+  async paginate(options: IPaginationOptions): Promise<Pagination<any>> {
+    const query = this.userRepository.createQueryBuilder('q')
+    .select(['q.id', 'q.username', 'q.isActive','f.id','f.dni','f.name','f.first_name','f.last_name','f.email','f.cell_phone_number','d.name'])
+    .innerJoin('q.id_person','f')
+    .innerJoin('f.id_role','d')
+    return paginate<any>( query, options);
   }
 
   async infoUser(userId: string) {

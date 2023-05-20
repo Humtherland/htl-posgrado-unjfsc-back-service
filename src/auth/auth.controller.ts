@@ -1,5 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { Req, UseGuards } from '@nestjs/common/decorators';
+import { Controller, Get, Post, Body, Patch, Param, Delete, DefaultValuePipe, ParseIntPipe } from '@nestjs/common';
+import { Query, Req, UseGuards } from '@nestjs/common/decorators';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { Auth, GetUser, RawHeaders, RoleProtected } from './decorators';
@@ -9,18 +9,13 @@ import { User } from './entities';
 import { UserRoleGuard } from './guards/user-role.guard';
 import { ValidScopes } from './interfaces';
 import * as jwt from 'jsonwebtoken';
+import { IPaginationOptions } from 'nestjs-typeorm-paginate';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('postulation-register')
-  createPostulatorUser(@Body() createPostulatorUserDto: CreatePostulatorUserDto ) {
-    return this.authService.createPostulator( createPostulatorUserDto );
-  }
-
   @Post('register')
-  // @Auth( ValidScopes.AUTH_SUDO )
   createUser(@Body() createUserDto: CreateUserDto ) {
     return this.authService.create( createUserDto );
   }
@@ -42,9 +37,14 @@ export class AuthController {
 
   @Get()
   @UseGuards(AuthGuard())
-  findAll() {
-    return this.authService.findAll();
+  findPagination(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 1,
+  ) {
+    const options: IPaginationOptions = { limit,page,};
+    return this.authService.paginate(options);
   }
+
 
   // @Get('private')
   // @UseGuards(AuthGuard())

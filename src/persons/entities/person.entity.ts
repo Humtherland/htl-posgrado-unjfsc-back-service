@@ -1,6 +1,7 @@
 import { User } from 'src/auth/entities';
 import { CivilState } from 'src/civil-state/entities/civil-state.entity';
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Role } from 'src/role/entities/role.entity';
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity({ name: 'person' })
 export class Person {
@@ -45,11 +46,11 @@ export class Person {
     })
     address: string;
 
-    @OneToOne((type:any) => CivilState, (civilState) => civilState.id, {cascade:true, nullable: false} )
+    @ManyToOne((type:any) => CivilState, (civilState) => civilState.id, {cascade:true, nullable: false} )
 	@JoinColumn({ name: 'id_civil_status' })
     id_civil_status: number;
 
-    @OneToOne((type:any) => CivilState, (civilState) => civilState.id, {cascade:true, nullable: false} )
+    @ManyToOne((type:any) => Role, (role) => role.id, {cascade:true, nullable: false} )
 	@JoinColumn({ name: 'id_role' })
     id_role: number;
 

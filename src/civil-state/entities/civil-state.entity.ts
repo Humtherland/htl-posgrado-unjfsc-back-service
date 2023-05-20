@@ -1,5 +1,5 @@
 import { Person } from "src/persons/entities/person.entity";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'civil-state' })
 export class CivilState {
@@ -11,7 +11,7 @@ export class CivilState {
 	})
 	name: string;
 
-	@OneToOne((type) => Person, (person) => person.id_civil_status )
+	@OneToMany((type) => Person, (person) => person.id_civil_status )
 	person: Person;
 
 	@CreateDateColumn()
